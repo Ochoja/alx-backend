@@ -34,6 +34,7 @@ class Server:
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """Fetch data on a page base on the page number and page size"""
+        filename = 'Popular_Baby_Names.csv'
         rows = []
 
         assert (isinstance(page, int) and isinstance(page_size, int))
@@ -41,7 +42,7 @@ class Server:
 
         indexes = index_range(page, page_size)  # get start and end index
 
-        with open(self.DATA_FILE, 'r') as baby_names:
+        with open(filename, 'r') as baby_names:
             csvreader = list(csv.reader(baby_names))
 
             # ignore header by adding 1 to index
