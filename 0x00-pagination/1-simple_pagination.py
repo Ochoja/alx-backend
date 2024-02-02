@@ -33,18 +33,19 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        """Get start and end index"""
+        """Fetch data on a page base on the page number and page size"""
         filename = 'Popular_Baby_Names.csv'
         rows = []
 
         assert (isinstance(page, int) and isinstance(page_size, int))
         assert (page > 0 and page_size > 0)
 
-        indexes = index_range(page, page_size)
+        indexes = index_range(page, page_size)  # get start and end index
 
         with open(filename, 'r') as baby_names:
             csvreader = list(csv.reader(baby_names))
 
+            # ignore header by adding 1 to index
             for row in csvreader[indexes[0] + 1: indexes[1] + 1]:
                 rows.append(row)
 
