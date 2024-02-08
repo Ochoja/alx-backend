@@ -40,12 +40,9 @@ class Server:
         assert (page > 0 and page_size > 0)
 
         indexes = index_range(page, page_size)  # get start and end index
+        dataset = self.dataset()
 
-        with open(self.DATA_FILE, 'r') as baby_names:
-            csvreader = list(csv.reader(baby_names))
+        for row in dataset[indexes[0]: indexes[1]]:
+            rows.append(row)
 
-            # ignore header by adding 1 to index
-            for row in csvreader[indexes[0] + 1: indexes[1] + 1]:
-                rows.append(row)
-
-            return rows
+        return rows
