@@ -33,7 +33,7 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        """Fetch data on a page base on the page number and page size"""
+        """Fetch data on a page based on the page number and page size"""
         rows = []
 
         assert (isinstance(page, int) and isinstance(page_size, int))
@@ -48,6 +48,9 @@ class Server:
         return rows
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> List[List]:
+        data = self.get_page(page, page_size)
+        total_pages = math.ceil(len(self.dataset()) / page_size)
+
         if page == 1:
             prev_page = None
         else:
@@ -57,9 +60,6 @@ class Server:
             next_page = None
         else:
             next_page = page + 1
-
-        data = self.get_page(page, page_size)
-        total_pages = math.ceil(len(self.dataset()) / page_size)
 
         return {'page_size': page_size, 'page': page, 'data': data,
                 'next_page': next_page, 'prev_page': prev_page,
