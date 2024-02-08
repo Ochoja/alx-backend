@@ -49,22 +49,15 @@ class Server:
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> List[List]:
         data = self.get_page(page, page_size)
-        total_pages = math.ceil(len(self.dataset()) / page_size)
+        total_pages = math.ceil(len(self.dataset()) / page_size) if data else 0
 
-        if page == 1:
-            prev_page = None
-        else:
-            prev_page = page - 1
-
-        if self.get_page(page+1, page_size) == []:
-            next_page = None
-        else:
-            next_page = page + 1
+        prev_page = None if page <= 1 else page - 1
+        next_page = page + 1 if page < total_pages else None
 
         if data == []:
             page_size = 0
         else:
-            page_size = page_size
+            page_size = len(data)
 
         return {'page_size': page_size, 'page': page, 'data': data,
                 'next_page': next_page, 'prev_page': prev_page,
