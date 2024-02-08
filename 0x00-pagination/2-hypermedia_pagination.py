@@ -34,19 +34,23 @@ class Server:
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """Fetch data on a page base on the page number and page size"""
-        filename = 'Popular_Baby_Names.csv'
         rows = []
 
         assert (isinstance(page, int) and isinstance(page_size, int))
         assert (page > 0 and page_size > 0)
 
         indexes = index_range(page, page_size)  # get start and end index
+        dataset = self.dataset()  # get dataset
 
-        with open(filename, 'r') as baby_names:
-            csvreader = list(csv.reader(baby_names))
+        for row in dataset[indexes[0]: indexes[1]]:
+            rows.append(row)
 
-            # ignore header by adding 1 to index
-            for row in csvreader[indexes[0] + 1: indexes[1] + 1]:
-                rows.append(row)
+        return rows
 
-            return rows
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> List[List]:
+        next_page = self.get_page(page+1, page_size)
+        prev_page = self.get_page(page-1, page_size)
+        data = self.get_page(page, page_size)
+        total_pages = len(self.dataset()) / page_size
+
+        return {'page_size': page_size, 'page': page, 'data': data, 'next_page': next_page, 'prev_page': prev_page, 'total_pages': total_pages}
