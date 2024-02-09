@@ -4,13 +4,13 @@ from base_caching import BaseCaching
 
 
 class BasicCache(BaseCaching):
-    """Caching system"""
+    """Get and insert cache data"""
 
     def put(self, key, item):
-        """put item"""
+        """put item in cache"""
         if key is not None and item is not None:
             self.cache_data[key] = item
 
     def get(self, key):
-        """Get item"""
+        """get item from cache"""
         return self.cache_data.get(key)
