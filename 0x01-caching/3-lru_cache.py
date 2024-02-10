@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-LIFO cache replacement property
+LRU cache replacement property
 cache_info is arranged in reverse order
-most recently used is put at the end of 
-the list, least recently used is at the 
+most recently used is put at the end of
+the list, least recently used is at the
 beginning of the list
 """
 from base_caching import BaseCaching
